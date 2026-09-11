@@ -19,6 +19,12 @@ while True:
        #q5
        if stock_quantity < 0: 
             print("Negative numbers are not allowed!")
+
+       #q7
+       if total > 500:
+            print("The inventory has exceed 500 units!")
+            break
+       
     except:
         #q4
         if stock_quantity != stock_quantity.isdigit():
