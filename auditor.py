@@ -11,7 +11,9 @@ while True:
              break     
        # q3
        stock_quantity = int(stock_quantity)
-       
+       #q5
+       if stock_quantity < 0: 
+            print("Negative numbers are not allowed!")
     except:
         #q4
         if stock_quantity != stock_quantity.isdigit():
