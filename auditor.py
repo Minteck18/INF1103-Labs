@@ -1,16 +1,21 @@
 #q1
 inventory = 0; 
+total = 0
 
 #q2
 while True:
     stock_quantity = input("Please enter the stock quantity or type quit to exit")
     try:
        #q2
-       if stock_quantity == "quit":
-             print("You have exited from the program, bye")
-             break     
+       if stock_quantity.lower() == "quit":
+           print("You have exited from the program, bye")
+           break
        # q3
        stock_quantity = int(stock_quantity)
+       #q6
+       if stock_quantity > 0:
+               total += int(stock_quantity) 
+               print("current running total", total)
        #q5
        if stock_quantity < 0: 
             print("Negative numbers are not allowed!")
