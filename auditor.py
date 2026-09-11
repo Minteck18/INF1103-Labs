@@ -11,7 +11,11 @@ while True:
              break     
        # q3
        stock_quantity = int(stock_quantity)
-  
+       
+    except:
+        #q4
+        if stock_quantity != stock_quantity.isdigit():
+            print("Invalid input! Please enter a integer")
      
 
     
