@@ -23,3 +23,6 @@ def get_valid_input():
         
     return int(stock_quantity), failed_attempts
 
+def process_delivery(current_total, new_value):    
+     return current_total + new_value
+
