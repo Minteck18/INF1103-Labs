@@ -1,12 +1,16 @@
 import json
 import os
 
+INVENTORY_FILE = "inventory.json"
+
 def display_all_products(inventory):
     print()
     print("Current Inventory:")
     print("-"*38)
     for product in inventory:
-        print(f"ID: {product["ID"]} | Name: {product["Name"]} | Price: ${product["Price"]:.2f} | Stock: {product["Stock"]}")
+        print(
+            f"ID: {product['ID']} | Name: {product['Name']} | Price: ${product['Price']:.2f} | Stock: {product['Stock']}"
+        )
     print("-"*38)
 
 def add_product(inventory):
@@ -16,7 +20,7 @@ def add_product(inventory):
     product_name = get_valid_input("Product Name: ", parse_product_name)
 
     for product in inventory:
-        if product["ID"] == product_id:
+        if product['ID'] == product_id:
             print("product id must be unique") 
             return
     
@@ -33,19 +37,21 @@ def add_product(inventory):
 
     return
 
-def load_inventory():
-    if os.path.exists("inventory.json"):
-        print("inventory.json found!")
-
+def load_inventory(file=INVENTORY_FILE):
+    
     try:
-        with open("inventory.json", "r") as f:
+        with open(file, "r") as f:
             inventory = json.load(f)
-
+        print("inventory.json found!")
         print("Inventory loaded successfully")
+        print()
+
+        return inventory
+    
     except FileNotFoundError:
         print("inventory.json not found! Starting with an empty inventory")
 
-    return inventory
+    
 
 def save__inventory(inventory): 
     with open("inventory.json", "w") as f:
@@ -64,13 +70,13 @@ def search_product(inventory):
 
     print()
     for product in inventory:
-        if product["ID"] == product_id:
+        if product['ID'] == product_id:
             print("Product Found")
             print("-" * 20)
-            print(f"ID: {product["ID"]}")
-            print(f"Name: {product["Name"]}")
-            print(f"Price: {product["Price"]}")
-            print(f"Stock:  {product["Stock"]}")
+            print(f"ID: {product['ID']}")
+            print(f"Name: {product['Name']}")
+            print(f"Price: {product['Price']}")
+            print(f"Stock:  {product['Stock']}")
             print("-" * 20)
             print()
             is_found = True
@@ -88,7 +94,7 @@ def update_stock(inventory):
     
     print()
     for product in inventory:
-        if product["ID"] == product_id:
+        if product['ID'] == product_id:
             is_found = product
             break
     if is_found is None:
@@ -96,8 +102,8 @@ def update_stock(inventory):
             return
 
     print("Product Found:")
-    print(f"Name: {is_found["Name"]}")
-    print(f"Current Stock: {is_found["Stock"]}")
+    print(f"Name: {is_found['Name']}")
+    print(f"Current Stock: {is_found['Stock']}")
     print()
 
     new_quantity = get_valid_input("New Stock Quantity: ", parse_stock)
