@@ -157,9 +157,10 @@ def exit_from_program(inventory):
     with open("inventory.json", "w") as f:
             json.dump(inventory,f,indent=4)
 
+    print()
     print("Inventory saved successfully.")
     print("Thank you for using Inventory Management System")
-    print("Program terminated")
+    print("Program Terminated")
 
 def main_function():
     print("---" * 12)
@@ -193,7 +194,7 @@ def main_function():
         user_input = get_valid_input(f"Enter your choice: ({1} - {len(selection)}):",parse_choice)
         selection[user_input](inventory)
 
-        if selection == 6:
+        if user_input == 6:
             break
     
 main_function()
