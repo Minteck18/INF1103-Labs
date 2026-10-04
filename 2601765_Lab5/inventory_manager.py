@@ -1,4 +1,5 @@
 import json
+import os
 
 def display_all_products(inventory):
     print()
@@ -29,11 +30,25 @@ def add_products(inventory):
     return
 
 def load_inventory():
-    pass
+    if os.path.exists("inventory.json"):
+        print("inventory.json found!")
+
+    try:
+        with open("inventory.json", "r") as f:
+            inventory = json.load(f)
+
+        print("Inventory loaded successfully")
+    except FileNotFoundError:
+        print("inventory.json not found! Starting with an empty inventory")
+
+    return inventory
+
+    
 
 def save__inventory(inventory): 
     with open("inventory.json", "w") as f:
         json.dump(inventory,f,indent=4)
+    print("Saving inventory...")
     print("Inventory successfully saved to inventory.json")
     
 
@@ -83,17 +98,21 @@ def main_function():
     print("INVENTORY MANAGEMENT SYSTEM") 
     print("---" * 25) 
     
-    inventory = [
-        {"ID": "P001", "Name": "Laptop", "Price": 1200, "Stock": 15},
-        {"ID": "P002", "Name": "Mouse", "Price": 25.50, "Stock": 40},
-        {"ID": "P003", "Name": "Keyboard", "Price": 45, "Stock": 25}
-    ]
+    inventory = load_inventory()
 
     selection = {
         1: display_all_products,
         2: add_products,
         3: save__inventory
     }
+
+    ''' part a)
+    inventory = [
+        {"ID": "P001", "Name": "Laptop", "Price": 1200, "Stock": 15},
+        {"ID": "P002", "Name": "Mouse", "Price": 25.50, "Stock": 40},
+        {"ID": "P003", "Name": "Keyboard", "Price": 45, "Stock": 25}
+    ]
+    '''
 
     display_menu()
     
