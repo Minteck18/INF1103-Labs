@@ -10,6 +10,8 @@ def display_all_products(inventory):
     print("-"*38)
 
 def add_product(inventory):
+    print()
+    print("Add New Product")
     product_id  = get_valid_input("Product ID: ", parse_product_id)
     product_name = get_valid_input("Product Name: ", parse_product_name)
 
@@ -25,7 +27,9 @@ def add_product(inventory):
     new_product = {"ID": product_id, "Name": product_name, "Price": price, "Stock": stock_quality}
     inventory.append(new_product)
 
+    print()
     print("Product added successfully.")
+    print()
 
     return
 
@@ -46,26 +50,62 @@ def load_inventory():
 def save__inventory(inventory): 
     with open("inventory.json", "w") as f:
         json.dump(inventory,f,indent=4)
+    print()
     print("Saving inventory...")
     print("Inventory successfully saved to inventory.json")
+    print()
 
-def search_product():
-    pass
+def search_product(inventory):
+    print()
+    print("Search Product")
+    product_id = get_valid_input("Enter Product ID:", parse_product_id)
+
+    is_found = False
+
+    print()
+    for product in inventory:
+        if product["ID"] == product_id:
+            print("Product Found")
+            print("-" * 20)
+            print(f"ID: {product["ID"]}")
+            print(f"Name: {product["Name"]}")
+            print(f"Price: {product["Price"]}")
+            print(f"Stock:  {product["Stock"]}")
+            print("-" * 20)
+            print()
+            is_found = True
+            break 
+
+    if not is_found:
+        print("Product not found")  
 
 def update_stock(inventory):
+    print()
     print("Update Stock")
     product_id = get_valid_input("Enter Product ID: ", parse_product_id)
 
+    is_found = None
+    
+    print()
     for product in inventory:
         if product["ID"] == product_id:
-            print("Product Found:")
-            print(f"Name: {product["Name"]}")
-            print(f"Current Stock: {product["Stock"]}")
-            new_quantity = get_valid_input("New Stock Quantity", parse_stock)
-            product["Stock"] = new_quantity
-            print("Stock Updated Successfully!")
-    
-                 
+            is_found = product
+            break
+    if is_found is None:
+            print("product not found")
+            return
+
+    print("Product Found:")
+    print(f"Name: {is_found["Name"]}")
+    print(f"Current Stock: {is_found["Stock"]}")
+    print()
+
+    new_quantity = get_valid_input("New Stock Quantity: ", parse_stock)
+    is_found["Stock"] = new_quantity
+    print()
+
+    print("Stock Updated Successfully!")
+                
 def display_menu():
     print(f"{'-' * 10} MENU {'-' * 10}")
     menu = ["Display All Products", "Add Product", "Update Stock", "Search Product", "Save Inventory", "Exit"]
@@ -93,7 +133,6 @@ def parse_stock(user_input):
         raise ValueError("Stock must be a whole number")
     return int(user_input)
 
-
 def get_valid_input(prompt,parse):
     while True:
         user_input = input(prompt).strip()
@@ -116,11 +155,11 @@ def exit_from_program(inventory):
     print("Thank you for using Inventory Management System")
     print("Program terminated")
 
-
 def main_function():
-    print("---" * 25)
+    print("---" * 12)
     print("INVENTORY MANAGEMENT SYSTEM") 
-    print("---" * 25) 
+    print("---" * 12) 
+    print()
     
     inventory = load_inventory()
 
@@ -141,6 +180,7 @@ def main_function():
     ]
     '''
 
+    print()
     display_menu()
     
     while True:
