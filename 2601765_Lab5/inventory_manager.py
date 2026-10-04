@@ -9,7 +9,7 @@ def display_all_products(inventory):
         print(f"ID: {product["ID"]} | Name: {product["Name"]} | Price: ${product["Price"]:.2f} | Stock: {product["Stock"]}")
     print("-"*38)
 
-def add_products(inventory):
+def add_product(inventory):
     product_id  = get_valid_input("Product ID: ", parse_product_id)
     product_name = get_valid_input("Product Name: ", parse_product_name)
 
@@ -43,15 +43,29 @@ def load_inventory():
 
     return inventory
 
-    
-
 def save__inventory(inventory): 
     with open("inventory.json", "w") as f:
         json.dump(inventory,f,indent=4)
     print("Saving inventory...")
     print("Inventory successfully saved to inventory.json")
-    
 
+def search_product():
+    pass
+
+def update_stock(inventory):
+    print("Update Stock")
+    product_id = get_valid_input("Enter Product ID: ", parse_product_id)
+
+    for product in inventory:
+        if product["ID"] == product_id:
+            print("Product Found:")
+            print(f"Name: {product["Name"]}")
+            print(f"Current Stock: {product["Stock"]}")
+            new_quantity = get_valid_input("New Stock Quantity", parse_stock)
+            product["Stock"] = new_quantity
+            print("Stock Updated Successfully!")
+    
+                 
 def display_menu():
     print(f"{'-' * 10} MENU {'-' * 10}")
     menu = ["Display All Products", "Add Product", "Update Stock", "Search Product", "Save Inventory", "Exit"]
@@ -93,6 +107,16 @@ def parse_choice(user_input):
         raise ValueError("Please enter a valid choice") 
     return int(user_input)
 
+def exit_from_program(inventory):
+    print("Saving inventory before exit...")
+    with open("inventory.json", "w") as f:
+            json.dump(inventory,f,indent=4)
+
+    print("Inventory saved successfully.")
+    print("Thank you for using Inventory Management System")
+    print("Program terminated")
+
+
 def main_function():
     print("---" * 25)
     print("INVENTORY MANAGEMENT SYSTEM") 
@@ -102,8 +126,11 @@ def main_function():
 
     selection = {
         1: display_all_products,
-        2: add_products,
-        3: save__inventory
+        2: add_product,
+        3: update_stock,
+        4: search_product,
+        5: save__inventory,
+        6: exit_from_program
     }
 
     ''' part a)
@@ -119,7 +146,9 @@ def main_function():
     while True:
         user_input = get_valid_input(f"Enter your choice: ({1} - {len(selection)}):",parse_choice)
         selection[user_input](inventory)
-        
+
+        if selection == 6:
+            break
     
 main_function()
 
