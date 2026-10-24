@@ -36,4 +36,5 @@ class Inventory:
         )
         print("-"*38)
 
-
+    def get_products(self):
+        return self.__products.copy() 
