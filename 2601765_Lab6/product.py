@@ -1,6 +1,6 @@
 class Product:
     def __init__ (self, product_id,name,price,stock):
-        self._product_id = product_id
+        self.__product_id = product_id
         self.__name = name
         self.__price = price 
         self.__stock = stock
@@ -24,7 +24,6 @@ class Product:
         self.__stock = quantity
         return True
             
-    print("Stock Updated Successfully!")
 
 
 

@@ -5,19 +5,15 @@ class Inventory:
         self.__products = []
 
     def add_product(self,product):
-        print("Add New Product")
         for existing_products in self.__products:
             if existing_products.get_product_id() == product.get_product_id():
                     return False
                         
         self.__products.append(product)
-        print("Product added successfully.")
         return True
 
     def search_product(self, product_id):
-        
-        print("Search Product")
-        
+                
         for product in self.__products:
             if product.get_product_id() == product_id:
                 print("Product Found")
@@ -27,14 +23,23 @@ class Inventory:
         return None
 
     def display_all_products(self):
-    
-        print("Current Inventory:")
-        print("-"*38)
-        for product in self.__products:
-            print(
-            f"ID: {product.get_product_id()} | Name: {product.get_product_name()} | Price: ${product.get_product_price():.2f} | Stock: {product.get_product_stock()}"
-        )
-        print("-"*38)
+        print("\nCurrent Inventory")
+        print("------------------------------------------")
+
+        if not self.__products:
+            print("No products found.")
+
+        else:
+            for product in self.__products:
+                print(
+                    f"ID: {product.get_product_id()} | "
+                    f"Name: {product.get_product_name()} | "
+                    f"Price: ${product.get_product_price():.2f} | "
+                    f"Stock: {product.get_product_stock()}"
+                )
+
+        print("------------------------------------------")
+          
 
     def get_products(self):
-        return self.__products.copy() 
+        return self.__products

@@ -1,46 +1,60 @@
 import json
-
+import os
 from product import Product
 from inventory import Inventory
 
 INVENTORY_FILE = "inventory.json"
 
-def load_inventory(file=INVENTORY_FILE):
+def load_inventory():
     inventory = Inventory()
-    try:
-        with open(file, "r") as f:
-            inventory = json.load(f)
 
-        for item in inventory:
-            product = Product(item['product_id'], item['name'],item['price'], item['stock']) 
+    if os.path.exists(INVENTORY_FILE):
+        print("inventory.json found.")
 
-            if not inventory.add_product(product):
-                raise ValueError("Product ID must be unique. Duplicate ID found")
-                    
-        print("inventory.json found!")
-        print("Inventory loaded successfully")
-        return inventory
-        
-    except FileNotFoundError:
-        print("inventory.json not found! Starting with an empty inventory")
+        try:
+            with open(INVENTORY_FILE, "r") as file:
+                data = json.load(file)
 
+            for item in data:
+                product = Product(
+                    item["product_id"],
+                    item["name"],
+                    item["price"],
+                    item["stock"]
+                )
+
+                if not inventory.add_product(product):
+                    raise ValueError("Product ID must be unique. Duplicate ID found")
+
+            print("Inventory loaded successfully.")
+            return inventory
+
+        except (OSError, ValueError, TypeError, KeyError) as e:
+            print(f"Error loading inventory.json., {e}")
+            return Inventory()
+
+    else:
+        print("inventory.json not found.")
+                
+def save_inventory(inventory):
     
-
-def save__inventory(inventory): 
     data = []
 
     for product in inventory.get_products():
-        product_details = {
+        product_data = {
             "product_id": product.get_product_id(),
-            "product_name": product.get_product_price(),
-            "product_price": product.get_product_price(),
-            "product_stock": product.get_product_stock()
+            "name": product.get_product_name(),
+            "price": product.get_product_price(),
+            "stock": product.get_product_stock()
         }
-    
-        data.append(product_details)
-    
-    with open("inventory.json", "w") as f:
-        json.dump(inventory,f,indent=4)
-    
-    print("Saving inventory...")
-    print("Inventory successfully saved to inventory.json")
+
+        data.append(product_data)
+
+    try:
+        with open(INVENTORY_FILE, "w") as file:
+            json.dump(data, file, indent=4)
+
+        print("Inventory saved successfully to inventory.json.")
+
+    except OSError:
+        print("Error saving inventory.json.")
