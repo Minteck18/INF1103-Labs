@@ -6,12 +6,32 @@ class Product(ABC):
         self.__name = name
         self.__price = price 
         self.__stock = stock
+
+    def get_product_id(self):
+        return self.__product_id
+
+    def get_product_name(self):
+        return self.__name
+
+    def get_product_price(self):
+        return self.__price
+
+    def get_product_stock(self):
+        return self.__stock
     
     def display_information(self):
-        print(f"Product ID:{self.__product_id}")
-        print(f"Product Name:{self.__name}")
+        print(f"Product ID: {self.__product_id}")
+        print(f"Product Name: {self.__name}")
         print(f"Price: {self.__price}")
-        print(f"Stock: {self.__stock}")
+        print(f"Stock:  {self.__stock}")
+
+    def to_dict(self):
+        return {
+            "ProductID": self.__product_id,
+            "ProductName": self.__name,
+            "Price": self.__price,
+            "Stock": self.__stock
+        }
     
     def update_stock(self,quantity):
         if quantity < 0:
@@ -23,8 +43,8 @@ class Product(ABC):
     @abstractmethod
     def get_fulfilment_info(self):
         pass
-            
 
+                
 
 
 

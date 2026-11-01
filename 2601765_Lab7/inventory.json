@@ -1,0 +1,18 @@
+[
+    {
+        "type": "physical",
+        "ProductID": "P1001",
+        "ProductName": "Laptop",
+        "Price": 1800.0,
+        "Stock": 15,
+        "Weight": 1.5
+    },
+    {
+        "type": "digital",
+        "ProductID": "D1001",
+        "ProductName": "Gaming",
+        "Price": 45.0,
+        "Stock": 21,
+        "DownloadSize": 500.0
+    }
+]
