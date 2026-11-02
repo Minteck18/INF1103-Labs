@@ -4,7 +4,7 @@
         "ProductID": "P1001",
         "ProductName": "Laptop",
         "Price": 1800.0,
-        "Stock": 15,
+        "Stock": 12,
         "Weight": 1.5
     },
     {
@@ -14,5 +14,21 @@
         "Price": 45.0,
         "Stock": 21,
         "DownloadSize": 500.0
+    },
+    {
+        "type": "physical",
+        "ProductID": "P1002",
+        "ProductName": "Wallet",
+        "Price": 24.0,
+        "Stock": 12,
+        "Weight": 0.8
+    },
+    {
+        "type": "digital",
+        "ProductID": "D1002",
+        "ProductName": "Software",
+        "Price": 150.0,
+        "Stock": 12,
+        "DownloadSize": 800.0
     }
 ]

@@ -16,5 +16,11 @@
         "name": "Wallet",
         "price": 32.0,
         "stock": 15
+    },
+    {
+        "product_id": "P1004",
+        "name": "Keyboard",
+        "price": 35.0,
+        "stock": 25
     }
 ]
