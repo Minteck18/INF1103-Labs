@@ -1,17 +1,6 @@
-import json
 from file_handler import load_inventory, save_inventory
 from product import Product
-from inventory import Inventory
 from validators import parse_price, parse_product_id, parse_product_name, parse_stock, get_valid_input
-
-def exit_from_program(inventory):
-    print("Saving inventory before exit...")
-    save_inventory(inventory)
-
-    print("Inventory saved successfully.")
-    print("Thank you for using Inventory Management System")
-    print("Program Terminated")
-
 
 def display_menu():
     print(f"{'-' * 10} MENU {'-' * 10}")
@@ -25,7 +14,6 @@ def add_product(inventory):
     print("Add New Product")
     product_id  = get_valid_input("Product ID: ", parse_product_id)
     product_name = get_valid_input("Product Name: ", parse_product_name)
-
     
     if inventory.search_product(product_id) is not None:
         print("Product ID already exists.")
@@ -50,7 +38,6 @@ def search_product(inventory):
     if product is None:
             print("Product not found")  
             return
-
     
     print("Product Found")
     print("-" * 20)
