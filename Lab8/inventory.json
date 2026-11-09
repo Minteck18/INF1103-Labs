@@ -50,18 +50,6 @@
             "ContactEmail": "rainbowtech@example.com"
         },
         "DownloadSize": 800.0
-    },
-    {
-        "type": "digital",
-        "ProductID": "S1002",
-        "ProductName": "AV",
-        "Price": 14.0,
-        "Stock": 12,
-        "supplier": {
-            "SupplierID": "S1002",
-            "SupplierName": "ABC",
-            "ContactEmail": "abc@example.com"
-        },
-        "DownloadSize": 14.0
     }
+    
 ]
