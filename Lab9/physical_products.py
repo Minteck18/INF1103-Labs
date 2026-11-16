@@ -6,6 +6,8 @@ class PhysicalProducts(Product, CanBeShipped):
     def __init__(self, product_id: str, name: str, price: float, stock:int, weight: float, supplier:Supplier):
         super().__init__(product_id, name, price, stock, supplier)
         self.__weight: float = weight
+        if weight < 0:
+            raise ValueError("Weight cannot be negative.")
 
     def display_information(self)->None:
         super().display_information()

@@ -6,6 +6,9 @@ class DigitalProducts(Product):
         super().__init__(product_id, name, price, stock, supplier)
         
         self.__download_size:int = download_size
+        if download_size < 0:
+            raise ValueError("Download size cannot be negative.")
+
 
     def display_information(self)->None:
         super().display_information()

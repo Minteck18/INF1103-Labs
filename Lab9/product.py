@@ -41,7 +41,7 @@ class Product(ABC):
     
     def update_stock(self,quantity:int)->None:
         if quantity < 0:
-           return False
+            raise ValueError("Stock cannot be negative")
                
         self.__stock = quantity
         return True

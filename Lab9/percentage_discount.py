@@ -5,4 +5,4 @@ class PercentageDiscount(DiscountStrategy):
         self.__percentage:float = percentage
         
     def apply(self, total:float)->float:
-        total = total - (1 - self.__percentage / 100)
+        return total * (1 - self.__percentage / 100)

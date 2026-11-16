@@ -9,7 +9,12 @@ class Order:
         self.__order_lines: list[OrderLine] = []
         self.__discount: DiscountStrategy = (discount_strategy if discount_strategy is not None else NoDiscount())
 
-    def add_order_line(self, product: Product, quantity: int)-> None:
+   
+
+    def add_order_line(self, product: Product, quantity: int) -> None:
+        if quantity < 0:
+            raise ValueError(f"Invalid Quantity.")
+
         order_line = OrderLine(product, quantity)
         self.__order_lines.append(order_line)
 
