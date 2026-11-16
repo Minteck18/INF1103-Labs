@@ -65,7 +65,7 @@ def load_inventory():
     else:
         print("inventory.json not found.")
 
-def load_products(path: str, inventory: Inventory, supplier:Supplier)->None:
+def load_products(path: str, inventory: Inventory, supplier:Supplier)->int:
         loaded = 0
     
         try:
@@ -74,16 +74,16 @@ def load_products(path: str, inventory: Inventory, supplier:Supplier)->None:
                 next(csv_reader, None)
                 for row_number, row in enumerate(csv_reader, start=2):
                     try:
-                        product_type,product_id,name,price,stock_quantity = row
-                        product = ProductFactory.create(product_type, product_id, name, float(price), int(stock_quantity),supplier)
+                        product_type,product_id,name,price,stock_quantity,weight,download_size = row
+                        product = ProductFactory.create(product_type, product_id, name, float(price), int(stock_quantity),supplier, weight=float(weight),download_size=int(download_size))
                         inventory.add_product(product)
                         loaded += 1
                     except ValueError as error:
-                        raise ValueError(f"Invalid data on {row_number}: {error}")
+                        print(f"Invalid data on {row_number}: {error}")
         except FileNotFoundError:
-                    raise FileNotFoundError(f"Product does not exists on {path}")
+                    print(f"Product does not exists on {path}")
         finally:
-            print(f"{loaded} products loaded")
+            print(f"{loaded} products loaded.")
             print("Load attempt finished.")
         return loaded
                      

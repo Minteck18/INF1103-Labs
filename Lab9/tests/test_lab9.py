@@ -19,10 +19,11 @@ from supplier import Supplier
 from inventory import Inventory
 from file_handler import load_products
 
+# TEST THIS WITH python -m unittest discover -s tests -v   
+
 HEADER = "product_type,product_id,name,price,stock_quantity,weight,download_size\n"
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]   
-
 
 
 class DiscountStrategyTests(unittest.TestCase):
@@ -127,10 +128,10 @@ class ValidatorTests(unittest.TestCase):
         self.assertIn("Price must be a number", out)
         self.assertIn("Price must not be less than 0", out)
 
-    class CsvLoaderTests(unittest.TestCase):
+class CsvLoaderTests(unittest.TestCase):
         def setUp(self):
             self.supplier = Supplier(1, "ABC", "abc@acme.com")
-            self.inventory = Inventory(products=[])
+            self.inventory = Inventory()
             self._tmp = tempfile.TemporaryDirectory()
             self.addCleanup(self._tmp.cleanup)
             self.tmp_path = Path(self._tmp.name)
@@ -141,7 +142,7 @@ class ValidatorTests(unittest.TestCase):
                 load_products(str(self.tmp_path / "missing.csv"), self.inventory, self.supplier)   
 
             out = output.getvalue()
-            self.assertIn("Products file not found", out)
+            self.assertIn("Product does not exists on", out)
             self.assertIn("Load attempt finished.", out)
 
         def test_bad_rows_skipped_valid_rows_load(self):
@@ -159,11 +160,11 @@ class ValidatorTests(unittest.TestCase):
             with redirect_stdout(output):
                 load_products(str(csv_file), self.inventory, self.supplier)
 
-            self.assertTrue(self.inventory.has_product(1))
-            self.assertTrue(self.inventory.has_product(2))
-            self.assertTrue(self.inventory.has_product(5))
-            self.assertFalse(self.inventory.has_product(3))   # unknown type
-            self.assertFalse(self.inventory.has_product(4))   # bad price
+            self.assertTrue(self.inventory.find_product("1"))
+            self.assertTrue(self.inventory.find_product("2"))
+            self.assertTrue(self.inventory.find_product("5"))
+            self.assertFalse(self.inventory.find_product("3"))   # unknown type
+            self.assertFalse(self.inventory.find_product("4"))   # bad price
 
             out = output.getvalue()
             self.assertIn("Unknown product type: service", out)
@@ -172,7 +173,7 @@ class ValidatorTests(unittest.TestCase):
             self.assertIn("Load attempt finished.", out)
 
         def test_every_except_is_specific(self):
-            for filename in ("csv_loader.py", "validators.py", "main.py"):
+            for filename in ("file_handler.py", "validators.py", "main.py"):
                 with self.subTest(filename=filename):
                     source = (PROJECT_ROOT / filename).read_text()
                     self.assertNotIn("except:", source)
